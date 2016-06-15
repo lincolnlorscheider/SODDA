@@ -1,0 +1,630 @@
+
+
+
+6/2/2016                    Genentech SSF Siemens BAS                   03:03 PM
+                     Panel PPCL Report ( Temporary Report ) 
+ 
+Field Panels:  110PXCM04
+Programs: 110.COOLING.TOWER.PPCL, 110.RG.PPCL
+Line Range: 1 - 32767
+ 
+________________________________________________________________________________
+ 
+Panel System Name:       110PXCM04
+Program Name:            110.RG.PPCL
+ 
+E     5     C ********************************************************************************
+E     10    C					110.RG.PPCL
+E     15    C ********************************************************************************
+E     20    C THIS SOFTWARE IS OWNED AND MAINTAINED BY SIEMENS BUILDING TECHNOLOGIES, INC.
+E     25    C ALL RIGHTS RESERVED. ANY MODIFICATIONS WITHOUT THE EXPRESS, WRITTEN
+E     30    C CONSENT FROM SIEMENS BUILDING TECHNOLOGIES, INC. MAY VOID THE WARRANTY.
+E     35    C
+E     40    C PROGRAM NAME:  110.RG.PPCL
+E     45    C PANEL: 110PXCM04
+E     50    C PANEL LOCATION: XXX
+E     55    C CONTROLS: BUILDING 10 GLYCOL SYSTEM
+E     60    C
+E     65    C VER	DATE		NAME				COMMENTS
+E     70    C  A	10-13-2014	SERGIY KOVALCHUK	INITIAL PROGRAMMING
+E     75    C  1	MM-DD-YYYY
+E     80    C  2	MM-DD-YYYY
+E     85    C  3	MM-DD-YYYY
+E     90    C  4	MM-DD-YYYY
+E     95    C  5	MM-DD-YYYY
+E     100   C
+E     105   C
+E     200   C ********************************************************************************
+E     205   C	TABLE OF CONTENTS
+E     210   C ********************************************************************************
+E     215   C 5 HEADER
+E     220   C 100 REVISION HISTORY
+E     225   C 200 TABLE OF CONTENTS
+E     230   C 300 RESIDENT POINT SUMMARY ASSIGNMENTS
+E     235   C 1000 ON POWER RETURN
+E     240   C 2000 TIMERS
+E     242   C 2500 AUTOMATIC FAILUER RESET
+E     245   C 3000 CALCULATIONS
+E     250   C 4000 ALARM/FAILURE CHECKS
+E     255   C 5000 ROTATION
+E     260   C 6000 START UP
+E     265   C 20000 SHUTDOWN
+E     270   C 32000 END OF PROGRAM
+E     300   C ********************************************************************************
+E     303   C	RESIDENT POINT SUMMARY ASSIGNMENTS
+E     306   C ********************************************************************************
+E     309   C SECNDS - POWER AVAILABLE TIMER
+E     312   C SECND1 - UNASSIGNED
+
+
+                                     - 1 -
+
+
+
+
+
+
+6/2/2016                    Genentech SSF Siemens BAS                   03:03 PM
+                     Panel PPCL Report ( Temporary Report ) 
+ 
+Field Panels:  110PXCM04
+Programs: 110.COOLING.TOWER.PPCL, 110.RG.PPCL
+Line Range: 1 - 32767
+ 
+________________________________________________________________________________
+E     315   C SECND2 - CH1 TEMPERATURE ALARM TIMER
+E     318   C SECND3 - CH2 TEMPERATURE ALARM TIMER
+E     321   C SECND4 - UNASSIGNED
+E     324   C SECND5 - UNASSIGNED
+E     327   C SECND6 - CH1 FAIL TIMER
+E     330   C SECND7 - CH1 FAIL TIMER
+E     333   C
+E     336   C $LOC1 - ZGPD17 ROTTATION
+E     339   C $LOC2 - ZCPD29 ROTTATION
+E     342   C $LOC3 - UNASSIGNED
+E     345   C $LOC4 - ZCPD19 ROTTATION
+E     348   C $LOC5 - ZCPD21 ROTTATION
+E     351   C $LOC6 - ZCPD23 ROTTATION
+E     354   C $LOC7 - ZCPD27 ROTTATION
+E     357   C $LOC8 - UNASSIGNED
+E     360   C $LOC9 - UNASSIGNED
+E     363   C $LOC10 - UNASSIGNED
+E     366   C $LOC11 - UNASSIGNED
+E     369   C $LOC12 - UNASSIGNED
+E     372   C $LOC13 - UNASSIGNED
+E     375   C $LOC14 - UNASSIGNED
+E     378   C $LOC15 - UNASSIGNED
+E     381   C
+E     384   C *** RESIDENT POINTS LOOK UP TABLE ***
+E     387   C ZG12SY - B10 GLYCOL SYSTEM ENABLE  	[*]
+E     390   C 110.RG.SYS.FAIL.RESET - B10 GLYCOL SYSTEM ALARM RESET
+E     393   C ZS04F - SCU 04 PWFL [OFF FOR 300SEC ON POWERUP, ONLY USED IN LINE 2000]
+E     396   C OPGLYC - CHLR OP ALRM [10_10157_GLY CHLR STTS]
+E     399   C ZG1S10 - GLYCOL CHILLER 101 ENABLE 	[*]
+E     402   C ZG2S10 - GLYCOL CHILLER 102 ENABLE 	[*]
+E     405   C ZCIT10 - INSTR CHW ST [10_10157_PROCESS_SEC_TEMP]
+E     408   C ZCIT1A - INST CHST ALARM
+E     411   C ZG1A10 - GLYCOL CHILLER 101 ALARM
+E     414   C ZG2A10 - GLYCOL CHILLER 102 ALARM
+E     417   C 110.RG.RU3301.RU3302.CH.ALM - GLYCOL CHILLER ALARM
+E     420   C ZGPF17 - PUMP 1017 FAIL FLAG
+E     423   C ZGPF18 - PUMP 1018 FAIL FLAG
+E     426   C 110.RG.P3317.P3318.ALM - GLYCOL PUMP ALARM
+E     429   C ZCPF22 - P 1022 FAIL ALM [10_10158_PRCCHILLR COOL PMP_2]
+E     432   C ZCPF23 - **** POINT NOT FOUND IN THE DATABASE **** IF FOUND UNCOMMENT ALARM LINE
+E     435   C 110.PCHW.P3621.P3622.ALM - PCHW PUMP ALARM
+E     438   C FRC.CT.CWP.1009.FAIL - P 1009 FAILURE
+E     441   C FRC.CT.CWP.1010.FAIL - P 1010 FAILURE
+E     444   C 110.CW.P2309.P2310.ALM - CWP PUMP ALARM
+E     447   C ZGXT10 - GY1 2 LCHWT [10_10157_GLYCOL_LEAVING_TEMP]
+E     550   C ZGXT1A - GLYCOL LEAVING T ALM
+
+
+                                     - 2 -
+
+
+
+
+
+
+6/2/2016                    Genentech SSF Siemens BAS                   03:03 PM
+                     Panel PPCL Report ( Temporary Report ) 
+ 
+Field Panels:  110PXCM04
+Programs: 110.COOLING.TOWER.PPCL, 110.RG.PPCL
+Line Range: 1 - 32767
+ 
+________________________________________________________________________________
+E     553   C ZLGDY - LED LAG DAY [1-7]
+E     556   C ZLGTM - LED LAG TIME [HOURS]
+E     559   C
+E     562   C ZGPS17 - GLYCOL CHWP 1017  	[*]
+E     565   C ZGPS18 - GLYCOL CHWP 1018  	[*]
+E     568   C ZGPD17 - PUMP 1017 LEAD
+E     571   C ZCPD29 - PUMP 1029 LEAD
+E     574   C 110.PCW.H3301.TV - PCW TEMP VALVE
+E     577   C 110.PCW.H3301.TV.V - PCW TEMP VALVE
+E     580   C ZCITTS - ZCIT10 SET
+E     583   C ZCIVIG - ZCIV10 IG [INTEGRAL GAIN]
+E     586   C ZC04SY - CH104 SYSTEM
+E     589   C ZGXT10 - GY1 2 LCHWT
+E     592   C ZG12XF - ZGXT10 FAIL
+E     595   C ZG1W10 - GY101 K WATT
+E     980   C ********************************************************************************
+E     985   C	 ON POWER RETURN
+E     990   C ********************************************************************************
+ET    1000  ONPWRT(1020)
+ET    1010  GOTO 1502
+E     1020  SET(0,SECNDS,SECND1,SECND2,SECND3,SECND4,SECND5,SECND6,SECND7)
+E     1030  SET(0,$LOC1,$LOC2,$LOC3,$LOC4,$LOC5,$LOC6,$LOC7,$LOC8)
+E     1040  SET(0,$LOC9,$LOC10,$LOC11,$LOC12,$LOC13,$LOC14,$LOC15)
+E     1050  C
+E     1060  C
+E     1070  C
+E     1480  C RESET ANY ALARMS ON POWER RETURN
+E     1490  GOTO 4650
+E     1500  C SOFT START ON POWER RETURN, CHECK IF POWER AVAILABLE
+ET    1502  SAMPLE(2) "110.BLDG.GY.P.A.S" = "110.BLDG.BUS.A.S"
+ET    1504  SAMPLE(2) "110.BLDG.GY.P.B.S" = "110.BLDG.BUS.B.S"
+ET    1506  IF("110.BLDG.GY.P.A.S" .EQ. OFF .OR. "110.BLDG.GY.P.B.S
+            " .EQ. OFF) THEN ON(@OPER,ZCPS21) ELSE RELEAS(@OPER,ZCPS21)
+ET    1510  IF("110.BLDG.GY.P.A.S" .EQ. OFF .AND. "110.BLDG.GY.P.B.S" .EQ. OFF) THEN SET(0,SECNDS)
+ET    1512  "110.GY.SECNDS" = SECNDS
+ET    1514  C SET(@EMER,1,ZCPD21)
+ET    1520  IF(SECNDS .LT. 300) THEN ON(ZS04F) ELSE OFF(ZS04F)
+ET    1525  C IF(SECNDS .GE. 1 .AND. SECNDS .LT. 6) THEN ON("110.RG.SYS.FAIL.RESET") ELSE RELE
+ET    1526  IF(SECNDS .GE. 1 .AND. SECNDS .LT. 6) THEN GOTO 1527 ELSE GOTO 1529
+E     1527  ON("110.RG.SYS.FAIL.RESET")
+E     1528  SET(@EMER,1,ZCPD21)
+ET    1529  IF(SECNDS .GT. 6) THEN RELEAS(@EMER,ZCPD21)
+ET    1530  IF(SECNDS .LT. 25) THEN GOTO 20000
+ET    1540  C AFTER DELAY TURN ON SYSTEM POINT
+ET    1550  ON("ZG12SY")
+ET    1980  C ********************************************************************************
+
+
+                                     - 3 -
+
+
+
+
+
+
+6/2/2016                    Genentech SSF Siemens BAS                   03:03 PM
+                     Panel PPCL Report ( Temporary Report ) 
+ 
+Field Panels:  110PXCM04
+Programs: 110.COOLING.TOWER.PPCL, 110.RG.PPCL
+Line Range: 1 - 32767
+ 
+________________________________________________________________________________
+ET    1985  C	TIMERS
+ET    1990  C ********************************************************************************
+ET    1995  C TWO CHILLER FAIL TIMER
+ET    2000  SAMPLE(1) IF("110.RG.RU3301.RU3302.CH.ALM
+            " .EQ. OFF) THEN SET(0,"110.RG.CH.F.TM") ELSE "110.RG.CH.F.TM" = "
+            110.RG.CH.F.TM" + 1
+ET    2010  C TWO PRI. GLYCOL PUMPS FAIL TIMER
+ET    2020  SAMPLE(1) IF("110.RG.P3317.P3318.ALM" .EQ. OFF) THEN SET(0,"
+            110.RG.P17P18.F.TM") ELSE "110.RG.P17P18.F.TM" = "
+            110.RG.P17P18.F.TM" + 1
+ET    2030  C TWO PCW PUMPS FAIL TIMER
+ET    2040  SAMPLE(1) IF("110.PCHW.P3621.P3622.ALM
+            " .EQ. OFF) THEN SET(0,"110.RG.P21P22.F.TM") ELSE "
+            110.RG.P21P22.F.TM" = "110.RG.P21P22.F.TM" + 1
+ET    2050  C
+ET    2080  SAMPLE(1) IF("110.RG.P1029.P1030.ALM" .EQ. OFF) THEN SET(0,"
+            110.RG.P10P30.F.TM") ELSE "110.RG.P10P30.F.TM" = "
+            110.RG.P10P30.F.TM" + 1
+ET    2090  C
+ET    2110  C
+ET    2130  C
+ET    2150  C
+ET    2200  C CH1 ALARM TIMERS
+ET    2210  IF(ZG1S10 .EQ. PRFON .AND. "110.RG.RU3301.RGS.T" .GT. ZG12XF) THEN GOTO 2240 ELSE SECND2 = 0
+ET    2220  IF(ZG1S10 .EQ. ON .AND. ZG1W10 .GE. 1) THEN SECND6 = 0
+ET    2230  C CH2 ALARM TIMERS
+ET    2240  IF(ZG2S10 .EQ. PRFON .AND. "110.RG.RU3302.RGS.T" .GT. ZG12XF) THEN GOTO 2500 ELSE SECND3 = 0
+ET    2250  IF(ZG2S10 .EQ. ON .AND. ZG2W10 .GE. 1) THEN SECND7 = 0
+ET    2260  C
+ET    2485  C ********************************************************************************
+ET    2497  C	AUTOMATIC FAILUER RESET IF BOTH PICES OF REDUNDANT EQUIPMENT FAILED
+ET    2498  C ********************************************************************************
+ET    2499  C
+ET    2500  IF("110.RG.CH.F.TM" .LT. 120) THEN GOTO 2560
+E     2510  SET(0,"110.RG.CH.F.TM",SECND2,SECND3,SECND6,SECND7)
+E     2520  RELEAS(@EMER,ZG1F10,ZG2F10,ZG1S10,ZG2S10)
+E     2530  OFF("110.RG.RU3301.RU3302.CH.ALM",ZG1F10,ZG2F10)
+E     2535  RELEAS(@OPER,ZG1D10)
+E     2540  IF(ZG1D10 .EQ. ON) THEN OFF(ZG1D10) ELSE ON(ZG1D10)
+E     2550  C
+ET    2560  IF("110.RG.P17P18.F.TM" .LT. 120) THEN GOTO 2720
+E     2570  SET(0,"110.RG.P17P18.F.TM")
+E     2580  RELEAS(@EMER,ZGPF17,ZGPF18,ZGPS17,ZGPS18)
+E     2690  OFF("110.RG.P3317.P3318.ALM",ZGPF17,ZGPF18)
+E     2700  IF(ZGPD17 .EQ. ON) THEN OFF(ZGPD17) ELSE ON(ZGPD17)
+E     2710  C
+
+
+                                     - 4 -
+
+
+
+
+
+
+6/2/2016                    Genentech SSF Siemens BAS                   03:03 PM
+                     Panel PPCL Report ( Temporary Report ) 
+ 
+Field Panels:  110PXCM04
+Programs: 110.COOLING.TOWER.PPCL, 110.RG.PPCL
+Line Range: 1 - 32767
+ 
+________________________________________________________________________________
+ET    2720  IF("110.RG.P21P22.F.TM" .LT. 120) THEN GOTO 2780
+E     2730  SET(0,"110.RG.P21P22.F.TM")
+E     2740  RELEAS(@EMER,ZCPF21,ZCPF22,ZCPS21,ZCPS22)
+E     2750  OFF("110.PCHW.P3621.P3622.ALM",ZCPF21,ZCPF22)
+E     2760  IF(ZCPD21 .EQ. ON) THEN OFF(ZCPD21) ELSE ON(ZCPD21)
+E     2770  C
+ET    2780  IF("110.RG.P10P30.F.TM" .LT. 120) THEN GOTO 3000
+E     2790  SET(0,"110.RG.P10P30.F.TM")
+E     2800  RELEAS(@EMER,ZCPF29,ZCPF30,ZCPS29,ZCPS30)
+E     2810  OFF("110.RG.P1029.P1030.ALM",ZCPF29,ZCPF30)
+E     2820  IF(ZCPD29 .EQ. ON) THEN OFF(ZCPD29) ELSE ON(ZCPD29)
+E     2830  C
+E     2965  C
+E     2985  C ********************************************************************************
+E     2990  C	CALCULATIONS
+E     2995  C ********************************************************************************
+E     2997  C
+ET    3000  ZGXFM = SQRT(ZGXF10) * 18.68
+ET    3010  ZCIFM = SQRT(ZCIF10) * 5.93
+ET    3020  C GLYCOL CHILLERS RUNTIME CALCULATIONS
+ET    3030  SAMPLE(60) GOTO 3050
+ET    3040  GOTO 3070
+E     3050  IF(ZG1S10 .EQ. PRFON) THEN "110.RG.RU3301.RUNTIME" = "
+            110.RG.RU3301.RUNTIME" + 1
+E     3060  IF(ZG2S10 .EQ. PRFON) THEN "110.RG.RU3302.RUNTIME" = "
+            110.RG.RU3302.RUNTIME" + 1
+ET    3070  IF("110.RG.RU3301.RUNTIME" .GE. 60) THEN "
+            110.RG.RU3301.RUNTIME.HR" = "110.RG.RU3301.RUNTIME.HR" + 1 ELSE GOTO 3090
+E     3080  SET(0,"110.RG.RU3301.RUNTIME")
+ET    3090  IF("110.RG.RU3302.RUNTIME" .GE. 60) THEN "
+            110.RG.RU3302.RUNTIME.HR" = "110.RG.RU3302.RUNTIME.HR" + 1 ELSE GOTO 3110
+E     3100  SET(0,"110.RG.RU3302.RUNTIME")
+E     3105  C IF CHILLER RUN TIME GREATER THEN 336HR THEN SET OFF NOTIFICATION ALARM
+ET    3110  IF("110.RG.RU3301.RUNTIME.HR" .GE. 336 .OR. "
+            110.RG.RU3302.RUNTIME.HR" .GE. 336) THEN ON("110.RG.ROTATION.REC
+            ") ELSE OFF("110.RG.ROTATION.REC")
+ET    3120  C RESET RUNTIME OF NON RUNNING CHILLER
+ET    3130  IF(ZG1D10 .EQ. ON) THEN SET(0,"110.RG.RU3302.RUNTIME.HR","
+            110.RG.RU3302.RUNTIME") ELSE SET(0,"110.RG.RU3301.RUNTIME.HR","
+            110.RG.RU3301.RUNTIME")
+ET    3985  C ********************************************************************************
+ET    3990  C	ALARM/FAILURE CHECKS
+ET    3995  C ********************************************************************************
+ET    3997  C KEEP CHILLER ALARM FLAG IN "NONE" PRIORITY
+ET    4000  IF(OPGLYC .EQ. @OPER) THEN RELEAS(@OPER,OPGLYC)
+ET    4010  C IF CHILLER NOT IN HAND THEN CLEAR ALARM FLAG AND RESET ITS TOTALIZED VALUE
+
+
+                                     - 5 -
+
+
+
+
+
+
+6/2/2016                    Genentech SSF Siemens BAS                   03:03 PM
+                     Panel PPCL Report ( Temporary Report ) 
+ 
+Field Panels:  110PXCM04
+Programs: 110.COOLING.TOWER.PPCL, 110.RG.PPCL
+Line Range: 1 - 32767
+ 
+________________________________________________________________________________
+ET    4020  IF(ZG1S10 .EQ. @NONE .AND. ZG2S10 .EQ. @NONE) THEN OFF(
+            OPGLYC) ELSE ON(OPGLYC)
+ET    4030  IF(OPGLYC .EQ. OFF) THEN INITTO(0.0,OPGLYC)
+ET    4040  C SUPPLY TEMPERATURE ALARM
+ET    4050  IF(ZCIT10 .GT. 65.0) THEN ON(ZCIT1A)
+ET    4055  IF(ZCIT10 .LT. 60.0) THEN OFF(ZCIT1A)
+ET    4060  C
+ET    4070  IF(ZGXT10 .GT. 35.0) THEN ON(ZGXT1A)
+ET    4075  IF(ZGXT10 .LT. 29.0) THEN OFF(ZGXT1A)
+ET    4080  C IF BOTH CHILLERS OR PUMPS IN ALARM THEN TURN ON APPROPRIATE FLAG
+ET    4090  IF("ZG1F10" .EQ. ALARM .AND. "ZG2F10" .EQ. ALARM) THEN ON("
+            110.RG.RU3301.RU3302.CH.ALM") ELSE OFF("
+            110.RG.RU3301.RU3302.CH.ALM")
+ET    4100  IF("ZGPF17" .EQ. ALARM .AND. "ZGPF18" .EQ. ALARM) THEN ON("
+            110.RG.P3317.P3318.ALM") ELSE OFF("110.RG.P3317.P3318.ALM")
+ET    4110  IF("ZCPF21" .EQ. ALARM .AND. "ZCPF22" .EQ. ALARM) THEN ON("
+            110.PCHW.P3621.P3622.ALM") ELSE OFF("110.PCHW.P3621.P3622.ALM")
+ET    4120  IF("ZCPF29" .EQ. ALARM .AND. "ZCPF30" .EQ. ALARM) THEN ON("
+            110.RG.P1029.P1030.ALM") ELSE OFF("110.RG.P1029.P1030.ALM")
+ET    4160  C
+ET    4170  C
+ET    4180  C *** GLYCOL PUMPS FAILUER
+ET    4190  IF(ZGPS17 .EQ. ON .AND. ZGPS17 .EQ. ALARM) THEN EMON(ZGPF17
+            ) ELSE OFF(ZGPF17)
+ET    4200  IF(ZGPS18 .EQ. ON .AND. ZGPS18 .EQ. ALARM) THEN EMON(ZGPF18
+            ) ELSE OFF(ZGPF18)
+ET    4210  C *** CONDENSER WATER PUMPS FAILURE
+ET    4220  IF(ZCPS29 .EQ. ON .AND. ZCPS29 .EQ. ALARM) THEN EMON(ZCPF29
+            ) ELSE OFF(ZCPF29)
+ET    4230  IF(ZCPS30 .EQ. ON .AND. ZCPS30 .EQ. ALARM) THEN EMON(ZCPF30
+            ) ELSE OFF(ZCPF30)
+ET    4270  C *** PCW PUMP FAILURE
+ET    4280  IF(ZCPS21 .EQ. ON .AND. ZCPS21 .EQ. ALARM) THEN EMON(ZCPF21
+            ) ELSE OFF(ZCPF21)
+ET    4290  IF(ZCPS22 .EQ. ON .AND. ZCPS22 .EQ. ALARM) THEN EMON(ZCPF22
+            ) ELSE OFF(ZCPF22)
+ET    4360  C *** CH1 ALARMS
+ET    4370  IF(ZG1S10 .EQ. ON .AND. ZG1W10
+             .LT. 1 .AND. SECND6 .GT. 30) THEN ON("110.GLY.CHLR101.ALARM
+            ") ELSE OFF("110.GLY.CHLR101.ALARM")
+ET    4380  IF(SECND2 .GT. ZG12FD) THEN GOTO 4420
+ET    4390  IF(ZG1S10 .EQ. ON .AND. ZG1S10 .EQ. ALARM) THEN GOTO 4420
+ET    4400  OFF(ZG1F10)
+ET    4410  GOTO 4440
+E     4420  EMON(ZG1F10)
+E     4430  C *** CH2 ALARMS
+
+
+                                     - 6 -
+
+
+
+
+
+
+6/2/2016                    Genentech SSF Siemens BAS                   03:03 PM
+                     Panel PPCL Report ( Temporary Report ) 
+ 
+Field Panels:  110PXCM04
+Programs: 110.COOLING.TOWER.PPCL, 110.RG.PPCL
+Line Range: 1 - 32767
+ 
+________________________________________________________________________________
+ET    4440  IF(ZG2S10 .EQ. ON .AND. ZG2W10
+             .LT. 1 .AND. SECND7 .GT. 30) THEN ON("110.GLY.CHLR102.ALARM
+            ") ELSE OFF("110.GLY.CHLR102.ALARM")
+ET    4450  IF(SECND3 .GT. ZG12FD) THEN GOTO 4490
+ET    4460  IF(ZG2S10 .EQ. ON .AND. ZG2S10 .EQ. ALARM) THEN GOTO 4490
+ET    4470  OFF(ZG2F10)
+ET    4480  GOTO 4600
+E     4490  EMON(ZG2F10)
+E     4500  C
+E     4510  C
+E     4585  C ********************************************************************************
+E     4590  C 	ORERATOR INITIATED ALARM RESET
+E     4595  C ********************************************************************************
+ET    4600  IF("110.RG.SYS.FAIL.RESET" .EQ. OFF) THEN GOTO 5000
+E     4610  OFF(@OPER,"110.RG.SYS.FAIL.RESET")
+E     4620  RELEAS(@OPER,"110.RG.SYS.FAIL.RESET")
+E     4630  OFF("110.RG.SYS.FAIL.RESET")
+E     4640  C *** RESET ALL ALARM FLAGS IN THIS SECTION (LINES 4650-4980)
+E     4645  C RELEAS AND OFF FAIL FLAGS IN EMERGENCY OVERIDE
+E     4650  RELEAS(@EMER,ZG1F10,ZG2F10,ZGPF17,ZGPF18,ZCPF29,ZCPF30,
+            ZCPF21,ZCPF22)
+E     4655  RELEAS(@EMER,ZG1S10,ZG2S10,ZGPS17,ZGPS18,ZCPS29,ZCPS30,
+            ZCPS21,ZCPS22)
+E     4660  OFF(ZG1F10,ZG2F10,ZGPF17,ZGPF18,ZCPF29,ZCPF30,ZCPF21,ZCPF22)
+E     4670  SET(0,SECND2,SECND3,SECND6,SECND7)
+E     4680  C RELEAS AND OFF START/STOPS IN EMERGENCY OVERIDE
+E     4690  RELEAS(@EMER,ZG1S10,ZG2S10,ZGPS17,ZGPS18,ZCPS29,ZCPS30,
+            ZCPS21,ZCPS22)
+E     4700  C
+E     4985  C ********************************************************************************
+E     4990  C	SHEDULED ROTATION
+E     4995  C ********************************************************************************
+E     4997  C *** SHEDULED GLYCOL PUMP ROTTATION ***
+ET    5000  IF(DAY .EQ. ZLGDY .AND. CRTIME .EQ. ZLGTM + 0.0833) THEN GOTO 5010 ELSE GOTO 5050
+E     5010  IF($LOC1 .EQ. ON) THEN GOTO 5070
+E     5020  ON($LOC1)
+E     5030  IF(ZGPD17 .EQ. ON) THEN OFF(ZGPD17) ELSE ON(ZGPD17)
+E     5040  GOTO 5070
+ET    5050  OFF($LOC1)
+ET    5060  C *** SHEDULED CONDENCER PUMP ROTTATION ***
+ET    5070  IF(DAY .EQ. ZLGDY .AND. CRTIME .EQ. ZLGTM + 0.1666) THEN GOTO 5080 ELSE GOTO 5120
+E     5080  IF($LOC2 .EQ. ON) THEN GOTO 5210
+E     5090  ON($LOC2)
+E     5100  IF(ZCPD29 .EQ. ON) THEN OFF(ZCPD29) ELSE ON(ZCPD29)
+E     5110  GOTO 5210
+ET    5120  OFF($LOC2)
+
+
+                                     - 7 -
+
+
+
+
+
+
+6/2/2016                    Genentech SSF Siemens BAS                   03:03 PM
+                     Panel PPCL Report ( Temporary Report ) 
+ 
+Field Panels:  110PXCM04
+Programs: 110.COOLING.TOWER.PPCL, 110.RG.PPCL
+Line Range: 1 - 32767
+ 
+________________________________________________________________________________
+ET    5200  C *** PCW PUMP ROTATION
+ET    5210  IF(DAY .EQ. ZLGDY .AND. CRTIME .EQ. ZLGTM + 0.41666) THEN GOTO 5220 ELSE GOTO 5260
+E     5220  IF($LOC5 .EQ. ON) THEN GOTO 6000
+E     5230  ON($LOC5)
+E     5240  IF(ZCPD21 .EQ. ON) THEN OFF(ZCPD21) ELSE ON(ZCPD21)
+E     5250  GOTO 6000
+ET    5260  OFF($LOC5)
+ET    5410  C
+ET    5985  C ********************************************************************************
+ET    5990  C	START UP
+ET    5995  C ********************************************************************************
+ET    5998  C SKIP TO SHUT DOWN IF SYSTEM POINT IS OFF OR AFTER POWER RETURN
+ET    6000  IF(ZG12SY .EQ. OFF .OR. SECNDS .LT. 25) THEN GOTO 20000
+ET    6010  C *** HEAT EXCHANGER LOOPS
+ET    6012  IF(ZCPS21 .NE. PRFON .AND. ZCPS22 .NE. PRFON .AND. ZCIFM .LT. 1) THEN GOTO 6014 ELSE GOTO 6020
+E     6014  SET(100,"110.PCW.H3301.TV")
+E     6016  GOTO 6040
+ET    6020  LOOP(128,ZCIT10,"110.PCW.H3301.TV",ZCITTS,450,ZCIVIG,0,1,15,0,75,0)
+ET    6030  LOOP(128,ZCIT10,"110.PCW.H3301.TV.V",ZCITTS,500,ZCIVIG,200,1,40,0,100,0)
+ET    6040  "B10.AT-167C:HTG LOOPOUT" = "B10.AT-167B:HTG LOOPOUT"
+ET    6050  "B10.AT-169:HTG LOOPOUT" = "B10.AT-167B:HTG LOOPOUT"
+ET    6060  C *** GLYCOL PUMPS OPERATION
+ET    6070  IF(SECNDS .LT. 15.0) THEN GOTO 6200
+ET    6080  IF(ZGPF17 .EQ. OFF) THEN GOTO 6120
+E     6090  EMOFF(ZGPS17)
+E     6100  EMON(ZGPS18)
+E     6110  GOTO 6220
+ET    6120  IF(ZGPF18 .EQ. OFF) THEN GOTO 6160
+E     6130  EMOFF(ZGPS18)
+E     6140  EMON(ZGPS17)
+E     6150  GOTO 6220
+ET    6160  IF(ZGPD17 .EQ. ON) THEN ON(ZGPS17) ELSE ON(ZGPS18)
+ET    6170  IF(ZGPD17 .EQ. ON .AND. ZGPS17 .EQ. PRFON) THEN OFF(ZGPS18)
+ET    6180  IF(ZGPD17 .EQ. OFF .AND. ZGPS18 .EQ. PRFON) THEN OFF(ZGPS17)
+ET    6190  GOTO 6220
+E     6200  OFF(ZGPS17,ZGPS18)
+E     6210  C *** CONDENCER WATER PUMPS OPERATION
+ET    6220  IF(SECNDS .LT. 20.0 .OR. ZG12SY .EQ. OFF) THEN GOTO 6360
+ET    6230  IF(ZG1S10 .EQ. OFF .AND. ZG2S10 .EQ. OFF) THEN GOTO 6360
+ET    6240  IF(ZCPF29 .EQ. OFF) THEN GOTO 6280
+E     6250  EMOFF(ZCPS29)
+E     6260  EMON(ZCPS30)
+E     6270  GOTO 6540
+ET    6280  IF(ZCPF30 .EQ. OFF) THEN GOTO 6320
+E     6290  EMOFF(ZCPS30)
+E     6300  EMON(ZCPS29)
+
+
+                                     - 8 -
+
+
+
+
+
+
+6/2/2016                    Genentech SSF Siemens BAS                   03:03 PM
+                     Panel PPCL Report ( Temporary Report ) 
+ 
+Field Panels:  110PXCM04
+Programs: 110.COOLING.TOWER.PPCL, 110.RG.PPCL
+Line Range: 1 - 32767
+ 
+________________________________________________________________________________
+E     6310  GOTO 6540
+ET    6320  IF(ZCPD29 .EQ. ON) THEN ON(ZCPS29) ELSE ON(ZCPS30)
+ET    6330  IF(ZCPD29 .EQ. ON .AND. ZCPS29 .EQ. PRFON) THEN OFF(ZCPS30)
+ET    6340  IF(ZCPD29 .EQ. OFF .AND. ZCPS30 .EQ. PRFON) THEN OFF(ZCPS29)
+ET    6350  GOTO 6540
+E     6360  OFF(ZCPS29,ZCPS30)
+E     6530  C *** PCW PUMP OPERATION
+ET    6540  IF(SECNDS .LT. 35.0) THEN GOTO 6680
+ET    6550  IF(ZC04SY .EQ. OFF) THEN GOTO 6680
+ET    6560  IF(ZCPF21 .EQ. OFF) THEN GOTO 6600
+E     6570  EMOFF(ZCPS21)
+E     6580  EMON(ZCPS22)
+E     6590  GOTO 7100
+ET    6600  IF(ZCPF22 .EQ. OFF) THEN GOTO 6640
+E     6610  EMOFF(ZCPS22)
+E     6620  EMON(ZCPS21)
+E     6630  GOTO 7100
+ET    6640  IF(ZCPD21 .EQ. ON) THEN ON(ZCPS21) ELSE ON(ZCPS22)
+ET    6650  IF(ZCPD21 .EQ. ON .AND. ZCPS21 .EQ. PRFON) THEN OFF(ZCPS22)
+ET    6660  IF(ZCPD21 .EQ. OFF .AND. ZCPS22 .EQ. PRFON) THEN OFF(ZCPS21)
+ET    6670  GOTO 7100
+E     6680  OFF(ZCPS21,ZCPS22)
+E     6690  C
+E     7095  C *** CHILLER OPERATION
+ET    7100  IF(ZG12SY .EQ. OFF .OR. SECNDS .LT. 25.0) THEN GOTO 7230
+ET    7110  IF(ZG1F10 .EQ. OFF) THEN GOTO 7150
+E     7120  EMOFF(ZG1S10)
+E     7130  EMON(ZG2S10)
+E     7140  GOTO 19980
+ET    7150  IF(ZG2F10 .EQ. OFF) THEN GOTO 7190
+E     7160  EMOFF(ZG2S10)
+E     7170  EMON(ZG1S10)
+E     7180  GOTO 19980
+ET    7190  IF(ZG1D10 .EQ. ON) THEN ON(ZG1S10) ELSE ON(ZG2S10)
+ET    7200  IF(ZG1D10 .EQ. ON .AND. ZG1S10 .EQ. PRFON) THEN OFF(ZG2S10)
+ET    7210  IF(ZG1D10 .EQ. OFF .AND. ZG2S10 .EQ. PRFON) THEN OFF(ZG1S10)
+ET    7220  GOTO 19980
+E     7230  OFF(ZG1S10,ZG2S10)
+E     7240  C
+E     7250  C
+ET    19980 GOTO 32000
+E     19985 C ********************************************************************************
+E     19990 C	SHUTDOWN
+E     19995 C ********************************************************************************
+E     20000 OFF(ZG1S10,ZG2S10)
+E     20010 IF(ZG1S10 .EQ. PRFON .OR. ZG2S10 .EQ. PRFON) THEN GOTO 32000
+
+
+                                     - 9 -
+
+
+
+
+
+
+6/2/2016                    Genentech SSF Siemens BAS                   03:03 PM
+                     Panel PPCL Report ( Temporary Report ) 
+ 
+Field Panels:  110PXCM04
+Programs: 110.COOLING.TOWER.PPCL, 110.RG.PPCL
+Line Range: 1 - 32767
+ 
+________________________________________________________________________________
+E     20020 OFF(ZGPS17,ZGPS18,ZCPS29,ZCPS30,ZCPS22)
+E     20030 SET(0,"110.PCW.H3301.TV","110.PCW.H3301.TV.V")
+E     31985 C ********************************************************************************
+E     31990 C	END OF PROGRAM
+E     31995 C ********************************************************************************
+ET    32000 GOTO 1000
+ 
+********************************************************************************
+******************************** End of Report *********************************
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+                                     - 10 -
+
+
+
