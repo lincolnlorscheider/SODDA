@@ -363,8 +363,3 @@ class PanelPointLogReport(Report):
                 except KeyError:
                     self.analysis['Not in Normal'] = []
                     self.analysis['Not in Normal'].append(point.name)
-
-
-
-
-PanelPointLogReport()
