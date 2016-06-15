@@ -241,9 +241,22 @@ class Point(object):
         self.units = ''
         self.status = ''
         self.priority = ''
+        self.descriptor = ''
 
     def __repr__(self):
         return str([self.address, self.device, self.name, self.value, self.units, self.status, self.priority])
+
+    def is_out_of_auto(self):
+        if self.priority !="NONE" and self.priority != "OVRD" and not(self.name.endswith("STPT")):
+            return True
+        else:
+            return False
+
+    def is_out_of_normal(self):
+        if self.status != Point.normal:
+            return True
+        else:
+            return False
 
 
 class InvalidFilePath(Exception):
@@ -291,8 +304,67 @@ class PanelPPCLReport(Report):
 
 
 class PanelPointLogReport(Report):
-    def __init__(self, report_path):
-         super(PanelPointLogReport, self).__init__(report_path)
+    def __init__(self, report_path=None):
+        super(PanelPointLogReport, self).__init__(report_path)
+        self.point_list = []
+        self.analysis = {}
+        self.build_points()
+        self._analyze()
+
+    def build_points(self):
+        for line in self.data:
+            if len(line[0]) < 100:
+                if line[0] != "":
+                    try:
+                        new_point = self._map_normal(line)
+                    except:
+                        new_point = Point()
+                        new_point.name = line[0]
+                else:
+                    new_point = self._map_abberation(line, new_point)
+            if new_point.priority != "":
+                self.point_list.append(new_point)
+
+    def _map_normal(self, line):
+        point = Point()
+        point.name = line[0]
+        point.address = line[2]
+        point.descriptor = line[3]
+        point.value = line[4]
+        point.units = line[5]
+        point.status, point.priority = line[6].split("  ", 1)
+        point.status = point.status.strip()
+        point.priority = point.priority.strip()
+        return point
+
+    def _map_abberation(self, line, point):
+        point.address = line[1]
+        point.descriptor = line[2]
+        point.value = line[3]
+        point.units = line[4]
+        point.status, point.priority = line[5].split("  ", 1)
+        point.status = point.status.strip()
+        point.priority = point.priority.strip()
+        return point
+
+    def _analyze(self):
+        for point in self.point_list:
+            if point.priority !="NONE" and point.priority != "OVRD" and not(point.name.endswith("STPT")):
+                if point.priority == "":
+                    print point.name
+                try:
+                    self.analysis['Not in Auto'].append(point.name)
+                except KeyError:
+                    self.analysis['Not in Auto'] = []
+                    self.analysis['Not in Auto'].append(point.name)
+            if point.status != Point.normal:
+                try:
+                    self.analysis['Not in Normal'].append(point.name)
+                except KeyError:
+                    self.analysis['Not in Normal'] = []
+                    self.analysis['Not in Normal'].append(point.name)
 
 
-PanelPPCLReport()
+
+
+PanelPointLogReport()
