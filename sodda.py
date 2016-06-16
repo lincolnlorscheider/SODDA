@@ -236,12 +236,69 @@ class Point(object):
     def __init__(self):
         self.device = ''
         self.address = ''
-        self.name = ''
+        self.name = '' #used for system name on all but PDS points
         self.value = ''
         self.units = ''
         self.status = ''
         self.priority = ''
         self.descriptor = ''
+        self.system_name = ''
+        self.wire_resistance = ''
+        self.totalization = ''
+        self.standard_alarms = ''
+        self.special_mode_5 = ''
+        self.special_mode_4= ''
+        self.special_mode_3 = ''
+        self.special_mode_2 = ''
+        self.slope = ''
+        self.setpoint_value_5 = ''
+        self.setpoint_value_4 = ''
+        self.setpoint_value_3 = ''
+        self.setpoint_value_2 = ''
+        self.setpoint_value_1 = ''
+        self.setpoint_value_0 = ''
+        self.setpoint_name_5 = ''
+        self.setpoint_name_4 = ''
+        self.setpoint_name_3 = ''
+        self.setpoint_name_2 = ''
+        self.setpoint_name_1 = ''
+        self.setpoint_name_0 = ''
+        self.sensor_type = ''
+        self.reno = ''
+        self.priority = ''
+        self.popup = ''
+        self.point_type = ''
+        self.point_memo = ''
+        self.point_address = ''
+        self.panel_name = ''
+        self.out_of_service = ''
+        self.normal_ack_enabled = ''
+        self.night_mode_0 = ''
+        self.mode_delay = ''
+        self.low_alarm_limit = ''
+        self.level_delay = ''
+        self.intercept = ''
+        self.initial_value = ''
+        self.initial_priority = ''
+        self.informational_text = ''
+        self.high_alarm_limit = ''
+        self.graphic_name = ''
+        self.enhanced_alarms = ''
+        self.enhanced_alarm_mode_point = ''
+        self.engineering_units = ''
+        self.differential = ''
+        self.descriptor = ''
+        self.day_mode_1 = ''
+        self.cov_limit = ''
+        self.classification = ''
+        self.analog_representation = ''
+        self.alarmable = ''
+        self.alarm_message = ''
+        self.alarm_destinations = ''
+        self.aim = ''
+        self.address_type = ''
+        self.actuator_type = ''
+        self.number_of_decimal_places = ''
 
     def __repr__(self):
         return str([self.address, self.device, self.name, self.value, self.units, self.status, self.priority])
@@ -363,3 +420,109 @@ class PanelPointLogReport(Report):
                 except KeyError:
                     self.analysis['Not in Normal'] = []
                     self.analysis['Not in Normal'].append(point.name)
+
+
+class PointDataSorter(Report):
+    def __init__(self, report_path=None):
+        self.data = []
+        super(PointDataSorter, self).__init__(report_path)
+        self.point_list = []
+        self.analysis = {}
+        self.build_points()
+        self.analyze()
+        print self.analysis
+
+    def load_csv(self, filepath=None):
+        if filepath is not None:
+            if os.path.exists(filepath):
+                self.report_path = filepath
+            else:
+                return InvalidFilePath
+        infile = open(self.report_path,'rb')
+        infile.seek(0)
+        next(infile)
+        reader = csv.DictReader(infile)
+        for row in reader:
+            self.data.append(row)
+        self.data = self.data[:-1]
+
+    def build_points(self):
+        for row in self.data:
+            point = Point()
+            point.device = self._keyerr_as_emptystring(row, 'Panel Name')
+            point.address = self._keyerr_as_emptystring(row, 'Point Address')
+            point.name = self._keyerr_as_emptystring(row, 'Name') #used for system name on all but PDS points
+            point.system_name = self._keyerr_as_emptystring(row, 'System Name')
+            point.wire_resistance = self._keyerr_as_emptystring(row, 'Wire Resistance')
+            point.totalization = self._keyerr_as_emptystring(row, 'Totalization')
+            point.standard_alarms = self._keyerr_as_emptystring(row, 'Standard Alarms')
+            point.special_mode_5 = self._keyerr_as_emptystring(row, 'Special Mode (5)')
+            point.special_mode_4 = self._keyerr_as_emptystring(row, 'Special Mode (4)')
+            point.special_mode_3 = self._keyerr_as_emptystring(row, 'Special Mode (3)')
+            point.special_mode_2 = self._keyerr_as_emptystring(row, 'Special Mode (2)')
+            point.slope = self._keyerr_as_emptystring(row, 'Slope')
+            point.setpoint_value_5 = self._keyerr_as_emptystring(row, 'Setpoint Value(5)')
+            point.setpoint_value_4 = self._keyerr_as_emptystring(row, 'Setpoint Value(4)')
+            point.setpoint_value_3 = self._keyerr_as_emptystring(row, 'Setpoint Value(3)')
+            point.setpoint_value_2 = self._keyerr_as_emptystring(row, 'Setpoint Value(2)')
+            point.setpoint_value_1 = self._keyerr_as_emptystring(row, 'Setpoint Value(1)')
+            point.setpoint_value_0 = self._keyerr_as_emptystring(row, 'Setpoint Value(0)')
+            point.setpoint_name_5 = self._keyerr_as_emptystring(row, 'Setpoint Name(5)')
+            point.setpoint_name_4 = self._keyerr_as_emptystring(row, 'Setpoint Name(4)')
+            point.setpoint_name_3 = self._keyerr_as_emptystring(row, 'Setpoint Name(3)')
+            point.setpoint_name_2 = self._keyerr_as_emptystring(row, 'Setpoint Name(2)')
+            point.setpoint_name_1 = self._keyerr_as_emptystring(row, 'Setpoint Name(1)')
+            point.setpoint_name_0 = self._keyerr_as_emptystring(row, 'Setpoint Name(0)')
+            point.sensor_type = self._keyerr_as_emptystring(row, 'Sensor Type')
+            point.reno = self._keyerr_as_emptystring(row, 'RENO')
+            point.priority = self._keyerr_as_emptystring(row, 'Priority')
+            point.popup = self._keyerr_as_emptystring(row, 'Popup')
+            point.point_type = self._keyerr_as_emptystring(row, 'Point Type')
+            point.point_memo = self._keyerr_as_emptystring(row, 'Point Memo')
+            point.panel_name = self._keyerr_as_emptystring(row, 'Panel Name')
+            point.out_of_service =  self._keyerr_as_emptystring(row, 'Out of Service')
+            point.normal_ack_enabled =  self._keyerr_as_emptystring(row, 'Normal ack Enabled')
+            point.night_mode_0 =  self._keyerr_as_emptystring(row, 'Night Mode (0)')
+            point.mode_delay =  self._keyerr_as_emptystring(row, 'Mode Delay')
+            point.low_alarm_limit =  self._keyerr_as_emptystring(row, 'Low Alarm Limit')
+            point.level_delay =  self._keyerr_as_emptystring(row, 'Level Delay')
+            point.intercept =  self._keyerr_as_emptystring(row, 'Intercept')
+            point.initial_value =  self._keyerr_as_emptystring(row, 'Initial Value')
+            point.initial_priority =  self._keyerr_as_emptystring(row, 'Initial Priority')
+            point.informational_text =  self._keyerr_as_emptystring(row, 'Informational Text')
+            point.high_alarm_limit =  self._keyerr_as_emptystring(row, 'High Alarm Limit')
+            point.graphic_name =  self._keyerr_as_emptystring(row, 'Graphic Name')
+            point.enhanced_alarms =  self._keyerr_as_emptystring(row, 'Enhanced Alarms')
+            point.enhanced_alarm_mode_point =  self._keyerr_as_emptystring(row, 'Enhanced Alarm Mode Point')
+            point.engineering_units =  self._keyerr_as_emptystring(row, 'Engineering Units')
+            point.differential =  self._keyerr_as_emptystring(row, 'Differential')
+            point.descriptor = self._keyerr_as_emptystring(row, 'Descriptor')
+            point.day_mode_1 = self._keyerr_as_emptystring(row, 'Day Mode (1)')
+            point.cov_limit = self._keyerr_as_emptystring(row, 'COV Limit')
+            point.classification =  self._keyerr_as_emptystring(row, 'Classification')
+            point.analog_representation =  self._keyerr_as_emptystring(row, 'Analog Representation')
+            point.alarmable = self._keyerr_as_emptystring(row, 'Alarmable')
+            point.alarm_message = self._keyerr_as_emptystring(row, 'Alarm Message')
+            point.alarm_destinations = self._keyerr_as_emptystring(row, 'Alarm Destinations')
+            point.aim = self._keyerr_as_emptystring(row, 'AIM')
+            point.address_type = self._keyerr_as_emptystring(row, 'Address Type')
+            point.actuator_type = self._keyerr_as_emptystring(row, 'Actuator Type')
+            point.number_of_decimal_places = self._keyerr_as_emptystring(row, '# of decimal places')
+
+    def analyze(self):
+        for point in self.point_list:
+            print point.name, point.system_name
+            if point.name != point.system_name:
+                try:
+                    self.analysis["Name Mismatch"].append(point)
+                except KeyError:
+                    self.analysis["Name Mismatch"] = [point]
+
+    def _keyerr_as_emptystring(self, dictionary, key):
+        try:
+            return dictionary[key]
+        except KeyError:
+            print dictionary, key, "Not Found"
+            return ''
+
+
